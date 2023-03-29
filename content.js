@@ -5,8 +5,8 @@ function countWords(text){
 
     //loop through every character of visual text
     for(i = 0; i < text.length; i++){
-        if(text[i] === ' '){
-            //console.log(i);
+        //check if character is a whitespace character
+        if(text[i].match("\\s")){
             newWord = true;
         }
         else if(newWord){

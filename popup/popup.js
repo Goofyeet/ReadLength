@@ -3,7 +3,7 @@ function contentLoaded(){
     //displays the number of words on the page
     function displayNumWords(words){
         let numWords = document.getElementById("numWords");
-        numWords.textContent += " " + words;
+        numWords.innerText = " " + words;
     }
     
     //displays the time to read the web page
@@ -26,17 +26,21 @@ function contentLoaded(){
             //takes less than a minute to read
             length = "< 1m";
         }
+        else{
+            length += "m";
+        }
 
-        time.textContent += " " + length;
+        time.innerText = " " + length;
     }
 
     //calculates the time needed to read
-    //params: speed is wpm : number, numWords is number of words: number
+    //params: numWords is number of words: number
     //return: the time in minutes : number
-    function calculateTime(speed, numWords){
+    function calculateTime(numWords){
+        let speed = document.getElementById("wpmValue").value;
         let lengthMinutes = Math.floor(numWords / speed);
         
-        return lengthMinutes;
+        displayTime(lengthMinutes);
     }
     
     function getWpmInput(event){
@@ -47,10 +51,11 @@ function contentLoaded(){
     let wpm = document.getElementById("wpm");
     wpm.addEventListener("input", getWpmInput);
 
-    displayNumWords(10);
-    calculateTime(238, 409);
-
-    displayTime(-5);
+    /*
+    TODO:
+    1. retrieve numWords from content/background script
+    2. implement a better wpm input 
+    */
 }
 
 document.addEventListener("DOMContentLoaded", contentLoaded);
