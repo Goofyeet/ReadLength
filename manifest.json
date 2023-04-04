@@ -1,21 +1,23 @@
 {
-    "manifest_version": 2,
-    "name": "ReadLength",
-    "version": "1.0",
-  
-    "description": "Adds a browser action icon to the toolbar. Click the button to check how long to read the article",
-    "icons": {
-      "48": "icons/length-48.png"
-    },
-  
-    "permissions": [
-      "activeTab"
-    ],
-  
-    "browser_action": {
-      "default_icon": "icons/length-32.png",
-      "default_title": "Read Length",
-      "default_popup": "popup/popup.html"
+  "manifest_version": 2,
+  "name": "ReadLength",
+  "version": "1.0",
+  "description": "Adds a browser action icon to the toolbar. Click the button to check how long to read the article",
+  "icons": {
+    "48": "icons/length-48.png"
+  },
+  "permissions": [
+    "activeTab"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
     }
+  ],
+  "browser_action": {
+    "default_icon": "icons/length-32.png",
+    "default_title": "Read Length",
+    "default_popup": "popup/popup.html"
   }
-  
+}

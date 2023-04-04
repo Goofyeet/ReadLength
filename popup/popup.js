@@ -1,17 +1,12 @@
 //event handler for DOMContentLoaded
 function contentLoaded() {
-    let wpm = document.getElementById("wpm");
-    wpm.addEventListener("input", getWpmInput);
-
-    browser.runtime.onMessage(receiveMessage);
-
     function receiveMessage(wordCount) {
         //displays the number of words on the page
         let numWords = document.getElementById("numWords");
         numWords.innerText = " " + wordCount;
 
         //calculates the time needed to read
-        let speed = document.getElementById("wpmValue").value;
+        let speed = document.getElementById("wpmValue").innerText;
         let lengthMinutes = Math.floor(wordCount / speed);
 
         //displays the time to read the web page
@@ -43,6 +38,20 @@ function contentLoaded() {
         const value = event.target.value;
         console.log(value);
     }
+
+    function onError(error) {
+        console.log(`Error: ${error}`);
+    }
+
+    function connectToContent(activeTab) {
+        //connect to the content.js script for that tab
+        let myPort = browser.tabs.connect(activeTab[0].id, { name: "popup" });
+
+        myPort.onMessage.addListener(receiveMessage);
+    }
+
+    //get the tab id of the active tab
+    browser.tabs.query({ currentWindow: true, active: true }).then(connectToContent, onError);
 }
 
 document.addEventListener("DOMContentLoaded", contentLoaded);

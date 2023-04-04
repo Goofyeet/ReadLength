@@ -1,27 +1,24 @@
 //counts the number of words in the visual text
-function countWords(text){
+function countWords(port) {
+    let myPort = port;
+    let visualText = document.querySelector("body").innerText;
+
     let count = 0;
     let newWord = true;
 
     //loop through every character of visual text
-    for(i = 0; i < text.length; i++){
+    for (i = 0; i < visualText.length; i++) {
         //check if character is a whitespace character
-        if(text[i].match("\\s")){
+        if (visualText[i].match("\\s")) {
             newWord = true;
         }
-        else if(newWord){
+        else if (newWord) {
             count++;
             newWord = false;
         }
     }
 
-    console.log(count);
-
-    //send word count to background script
-    browser.runtime.sendMessage(count);
+    //send word count to popup script
+    myPort.postMessage(count);
 }
-
-let visualText = document.querySelector("body").innerText;
-
-console.log(visualText.length);
-countWords(visualText);
+browser.runtime.onConnect.addListener(countWords);
