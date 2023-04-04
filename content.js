@@ -16,7 +16,9 @@ function countWords(text){
     }
 
     console.log(count);
-    return count;
+
+    //send word count to background script
+    browser.runtime.sendMessage(count);
 }
 
 let visualText = document.querySelector("body").innerText;

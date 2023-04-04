@@ -15,7 +15,7 @@
     "browser_action": {
       "default_icon": "icons/length-32.png",
       "default_title": "Read Length",
-      "default_popup": "popup/howLong.html"
+      "default_popup": "popup/popup.html"
     }
   }
   
