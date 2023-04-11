@@ -4,7 +4,9 @@
   "version": "1.0",
   "description": "Adds a browser action icon to the toolbar. Click the button to check how long to read the article",
   "icons": {
-    "48": "icons/length-48.png"
+    "32": "icons/favicon-32x32.png",
+    "48": "icons/favicon.ico",
+    "96": "icons/favicon-96x96.png"
   },
   "permissions": [
     "activeTab"
@@ -16,7 +18,7 @@
     }
   ],
   "browser_action": {
-    "default_icon": "icons/length-32.png",
+    "default_icon": "icons/favicon.ico",
     "default_title": "Read Length",
     "default_popup": "popup/popup.html"
   }
