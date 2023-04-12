@@ -1,4 +1,9 @@
 body {
     background-color: #2780e3;
     color: white;
+    width: 160px;
+}
+
+#speed {
+    width: 50px;
 }

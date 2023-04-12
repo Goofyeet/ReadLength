@@ -6,32 +6,47 @@ function contentLoaded() {
         numWords.innerText = " " + wordCount;
 
         //calculates the time needed to read
-        let speed = document.getElementById("wpmValue").innerText;
-        let lengthMinutes = Math.floor(wordCount / speed);
+        let speed = document.getElementById("speed");
+        displayTime(Math.floor(wordCount / speed.value));
 
-        //displays the time to read the web page
-        let time = document.getElementById("time");
+        function calculateTime(event) {
+            let wpm = event.target.value;
 
-        if (lengthMinutes >= 60) {
-            //at least an hour to read
-            let hours = Math.floor(lengthMinutes / 60);
-            let minutes = lengthMinutes % 60;
-            lengthMinutes = hours + "h " + minutes + "m";
-        }
-        else if (lengthMinutes < 0) {
-            //lengthMinutes is negative, something is wrong
-            lengthMinutes = "error";
-            console.error("The length is negative");
-        }
-        else if (lengthMinutes == 0) {
-            //takes less than a minute to read
-            lengthMinutes = "< 1m";
-        }
-        else {
-            lengthMinutes += "m";
+            lengthMinutes = Math.floor(wordCount / wpm);
+
+            displayTime(lengthMinutes);
         }
 
-        time.innerText = " " + lengthMinutes;
+        function displayTime(lengthMinutes) {
+            //displays the time to read the web page
+            let time = document.getElementById("time");
+
+            if(lengthMinutes == "Infinity"){
+                lengthMinutes = "";
+            }
+            else if (lengthMinutes >= 60) {
+                //at least an hour to read
+                let hours = Math.floor(lengthMinutes / 60);
+                let minutes = lengthMinutes % 60;
+                lengthMinutes = hours + "h " + minutes + "m";
+            }
+            else if (lengthMinutes < 0) {
+                //lengthMinutes is negative, something is wrong
+                lengthMinutes = "error";
+                console.error("The length is negative");
+            }
+            else if (lengthMinutes == 0) {
+                //takes less than a minute to read
+                lengthMinutes = "< 1m";
+            }
+            else {
+                lengthMinutes += "m";
+            }
+
+            time.innerText = " " + lengthMinutes;
+        }
+
+        speed.addEventListener("input", calculateTime);
     }
 
     function getWpmInput(event) {
