@@ -1,5 +1,7 @@
 //event handler for DOMContentLoaded
 function contentLoaded() {
+
+
     function receiveMessage(wordCount) {
         //displays the number of words on the page
         let numWords = document.getElementById("numWords");
@@ -21,7 +23,7 @@ function contentLoaded() {
             //displays the time to read the web page
             let time = document.getElementById("time");
 
-            if(lengthMinutes == "Infinity"){
+            if (lengthMinutes == "Infinity") {
                 lengthMinutes = "";
             }
             else if (lengthMinutes >= 60) {
@@ -49,11 +51,6 @@ function contentLoaded() {
         speed.addEventListener("input", calculateTime);
     }
 
-    function getWpmInput(event) {
-        const value = event.target.value;
-        console.log(value);
-    }
-
     function onError(error) {
         console.log(`Error: ${error}`);
     }
@@ -65,8 +62,39 @@ function contentLoaded() {
         myPort.onMessage.addListener(receiveMessage);
     }
 
+    //set the popup options
+    function setPopupOptions() {
+        let options = browser.storage.sync.get("options");
+
+        options.then(setOptions, setDefault);
+
+        function setOptions(values) {
+            let wpm = values.options.wpm;
+            let backColor = values.options.background;
+            let fontColor = values.options.font;
+
+            document.getElementById("speed").value = wpm;
+            let body = document.getElementsByTagName("body")[0];
+
+            body.style.backgroundColor = backColor;
+            body.style.color = fontColor;
+        }
+
+        //error getting options, set default options
+        function setDefault() {
+            document.getElementById("speed").value = 240;
+            let body = document.getElementsByTagName("body")[0];
+
+            body.style.backgroundColor = "#2780e3";
+            body.style.color = "#ffffff";
+        }
+    }
+
+    setPopupOptions();
+
     //get the tab id of the active tab
     browser.tabs.query({ currentWindow: true, active: true }).then(connectToContent, onError);
 }
+
 
 document.addEventListener("DOMContentLoaded", contentLoaded);

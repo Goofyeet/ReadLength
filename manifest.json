@@ -9,7 +9,8 @@
     "96": "icons/favicon-96x96.png"
   },
   "permissions": [
-    "activeTab"
+    "activeTab",
+    "storage"
   ],
   "content_scripts": [
     {
@@ -21,6 +22,12 @@
       ]
     }
   ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "readLength@readLengthextension.com"
+    }
+  },
+
   "options_ui": {
     "page": "options.html",
     "browser_style": true
